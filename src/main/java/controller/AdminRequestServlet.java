@@ -19,67 +19,64 @@ import java.util.List;
 @WebServlet("/adminrequests")
 public class AdminRequestServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
-        String password = (String) session.getAttribute("password");
+        if (isUserAuthenticated(request, response)) {
+            ContactRequestDao dao = new ContactRequestDao();
+            try {
+                List<ContactRequest> activeRequests = dao.getRequests(false);
+                List<ContactRequest> archivedRequests = dao.getRequests(true);
+                System.out.println(archivedRequests);
+                System.out.println(activeRequests);
 
-        User user=new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        UserDao userDao = new UserDao();
-        try{
-            if (userDao.validateUser(user)){
-                ContactRequestDao dao = new ContactRequestDao();
-                try {
-                    List<ContactRequest> activeRequests = dao.getRequests(false);
-                    List<ContactRequest> archivedRequests = dao.getRequests(true);
-                    System.out.println(archivedRequests);
-                    System.out.println(activeRequests);
-
-                    request.setAttribute("activeRequests", activeRequests);
-                    request.setAttribute("archivedRequests", archivedRequests);
-                    request.getRequestDispatcher("requests.jsp").forward(request, response);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    response.sendRedirect("login.jsp");
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            else{
+                request.setAttribute("activeRequests", activeRequests);
+                request.setAttribute("archivedRequests", archivedRequests);
+                request.getRequestDispatcher("requests.jsp").forward(request, response);
+            } catch (SQLException e) {
+                e.printStackTrace();
                 response.sendRedirect("login.jsp");
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } else {
+            response.sendRedirect("login.jsp");
         }
     }
 
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (isUserAuthenticated(request, response)) {
+            int requestId = Integer.parseInt(request.getParameter("requestId"));
+            ContactRequestDao dao = new ContactRequestDao();
+            try {
+                dao.archiveRequest(requestId);
+                response.sendRedirect("adminrequests");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                response.sendRedirect("requests.jsp");
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            response.sendRedirect("login.jsp");
+        }
+    }
+
+    public boolean isUserAuthenticated(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
         String password = (String) session.getAttribute("password");
 
-        User user=new User();
+        User user = new User();
         user.setUsername(username);
         user.setPassword(password);
         UserDao userDao = new UserDao();
-        try{
-            if(userDao.validateUser(user)){
-                int requestId = Integer.parseInt(request.getParameter("requestId"));
-                ContactRequestDao dao = new ContactRequestDao();
-                try {
-                    dao.archiveRequest(requestId);
-                    response.sendRedirect("adminrequests");
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    response.sendRedirect("requests.jsp");
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+        try {
+            if (userDao.validateUser(user)) {
+                return true;
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+        return false;
     }
 }
 
