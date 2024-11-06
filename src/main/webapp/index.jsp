@@ -14,27 +14,32 @@
             background-color: #e0e0e0;
             font-family: Arial, sans-serif;
         }
+
         .contact-form {
             background-color: #f9f9f9;
             padding: 20px;
             width: 35%;
             border-radius: 5px;
         }
+
         .contact-form h2 {
             margin-top: 0;
             color: #333;
         }
+
         .contact-form p {
             margin: 0;
             padding-bottom: 10px;
             font-size: 0.9em;
             color: #666;
         }
+
         .contact-form label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
+
         .contact-form input[type="text"],
         .contact-form input[type="email"],
         .contact-form textarea {
@@ -45,9 +50,11 @@
             border-radius: 4px;
             font-size: 1em;
         }
+
         .contact-form textarea {
             height: 80px;
         }
+
         .contact-form input[type="submit"] {
             width: 100%;
             padding: 10px;
@@ -58,15 +65,18 @@
             font-size: 1em;
             cursor: pointer;
         }
+
         .contact-form input[type="submit"]:hover {
             background-color: #666;
         }
+
         .contact-form .required {
             color: red;
         }
-        a{
-            width:20%;
-            justify-content:center;
+
+        a {
+            width: 20%;
+            justify-content: center;
         }
     </style>
 </head>
@@ -74,7 +84,7 @@
 <div class="contact-form">
     <h2>Contact Us</h2>
     <p>Please fill this form in a decent manner</p>
-    <form action="contactuss" method="post">
+    <form action="contactus" method="post">
         <label for="name">Full Name <span class="required">*</span></label>
         <input type="text" id="name" name="name" required>
 

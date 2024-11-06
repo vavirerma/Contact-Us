@@ -1,4 +1,4 @@
-package controller;
+package servlets;
 
 import dao.ContactRequestDao;
 import dao.UserDao;
@@ -24,34 +24,12 @@ public class AdminRequestServlet extends HttpServlet {
             try {
                 List<ContactRequest> activeRequests = dao.getRequests(false);
                 List<ContactRequest> archivedRequests = dao.getRequests(true);
-                System.out.println(archivedRequests);
-                System.out.println(activeRequests);
 
                 request.setAttribute("activeRequests", activeRequests);
                 request.setAttribute("archivedRequests", archivedRequests);
                 request.getRequestDispatcher("requests.jsp").forward(request, response);
             } catch (SQLException e) {
-                e.printStackTrace();
-                response.sendRedirect("login.jsp");
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            response.sendRedirect("login.jsp");
-        }
-    }
-
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (isUserAuthenticated(request, response)) {
-            int requestId = Integer.parseInt(request.getParameter("requestId"));
-            ContactRequestDao dao = new ContactRequestDao();
-            try {
-                dao.archiveRequest(requestId);
-                response.sendRedirect("adminrequests");
-            } catch (SQLException e) {
-                e.printStackTrace();
-                response.sendRedirect("requests.jsp");
+                response.getWriter().println(e.getMessage());
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }

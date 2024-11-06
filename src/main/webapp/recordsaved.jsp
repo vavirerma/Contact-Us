@@ -9,16 +9,16 @@
 <html>
 <head>
     <title>Record Saved</title>
-  <style>
-    body{
-      font-family: Arial;
-      font-size: 50px;
-    }
+    <style>
+        body {
+            font-family: Arial;
+            font-size: 50px;
+        }
 
-  </style>
+    </style>
 </head>
 
-<body bgcolor=#00ffff>
+<body bgcolor=#fffacd>
 Record Saved Successfully
 </body>
 </html>

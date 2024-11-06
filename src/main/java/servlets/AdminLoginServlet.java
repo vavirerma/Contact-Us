@@ -1,9 +1,6 @@
-package controller;
+package servlets;
 
 import dao.UserDao;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,8 +15,7 @@ import java.sql.SQLException;
 @WebServlet("/admin")
 public class AdminLoginServlet extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-                                                                    throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -38,10 +34,9 @@ public class AdminLoginServlet extends HttpServlet {
                 response.getWriter().println("Invalid username or password");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             response.sendRedirect("login.jsp");
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            response.getWriter().println(e.getMessage());
         }
     }
 }

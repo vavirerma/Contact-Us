@@ -23,8 +23,7 @@ public class ContactRequestDao {
             statement.setString(2, request.getEmail());
             statement.setString(3, request.getMessage());
             statement.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -46,8 +45,7 @@ public class ContactRequestDao {
                 request.setArchived(rs.getBoolean("is_archived"));
                 requests.add(request);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return requests;
@@ -61,8 +59,20 @@ public class ContactRequestDao {
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        catch (SQLException e) {
+    }
+
+    public void activeRequest(int id) throws SQLException, ClassNotFoundException {
+        Class.forName("org.postgresql.Driver");
+        String sql = "UPDATE user_requests SET is_archived = FALSE WHERE id = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

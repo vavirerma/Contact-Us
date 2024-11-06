@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,40 +6,47 @@
     <title>Admin Login</title>
     <style>
         body {
+            background: dimgray;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             font-family: Arial, sans-serif;
         }
+
         .login-container {
-            width: 300px;
-            padding: 20px;
-            background-color: #f9f9f9;
+            width: 400px;
+            padding: 30px;
+            background-color: white;
             border-radius: 5px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
+
         h2 {
             text-align: center;
             color: #333;
         }
-        .error {
-            color: red;
-            font-size: 0.9em;
-            text-align: center;
-            margin-bottom: 10px;
-        }
+
         label {
             display: block;
             margin-top: 10px;
             font-weight: bold;
         }
+
         input[type="text"], input[type="password"] {
             width: 100%;
             padding: 8px;
             margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background: black;
+            color: white;
+            margin-left: 40%;
+            padding: 10px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -54,7 +61,7 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
 
-        <input type="submit" value="login">
+        <input type="submit" value="Login">
     </form>
 </div>
 </body>
