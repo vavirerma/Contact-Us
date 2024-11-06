@@ -1,4 +1,4 @@
-<%@ page import="model.ContactRequest" %>
+<%@ page import="model.Request" %>
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
@@ -54,8 +54,8 @@
 
 <%
     response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-    List<ContactRequest> activeRequests = (List<ContactRequest>) request.getAttribute("activeRequests");
-    List<ContactRequest> archivedRequests = (List<ContactRequest>) request.getAttribute("archivedRequests");
+    List<Request> activeRequests = (List<Request>) request.getAttribute("activeRequests");
+    List<Request> archivedRequests = (List<Request>) request.getAttribute("archivedRequests");
 
     if (activeRequests == null || activeRequests.isEmpty()) {
 %>
@@ -68,10 +68,11 @@
         <th>Full Name</th>
         <th>Email</th>
         <th>Message</th>
+        <th>Created At</th>
         <th>Action</th>
     </tr>
     <%
-        for (ContactRequest requestItem : activeRequests) {
+        for (Request requestItem : activeRequests) {
     %>
     <tr>
         <td><%= requestItem.getFullName() %>
@@ -80,9 +81,11 @@
         </td>
         <td><%= requestItem.getMessage() %>
         </td>
+        <td><%= requestItem.getCreatedAt()%>
+        </td>
         <td>
-            <form action="changerequesttype" method="post">
-                <input type="hidden" name="action" value="archive">
+            <form action="dashboard" method="post">
+                <input type="hidden" name="action" value="1">
                 <input type="hidden" name="requestId" value="<%= requestItem.getId() %>">
                 <button type="submit" class="archive-btn">Archive</button>
             </form>
@@ -110,10 +113,11 @@
         <th>Full Name</th>
         <th>Email</th>
         <th>Message</th>
+        <th>Created At</th>
         <th>Action</th>
     </tr>
     <%
-        for (ContactRequest requestItem : archivedRequests) {
+        for (Request requestItem : archivedRequests) {
     %>
     <tr>
         <td><%= requestItem.getFullName() %>
@@ -123,8 +127,11 @@
         <td><%= requestItem.getMessage() %>
         </td>
         <td>
-            <form action="changerequesttype" method="post">
-                <input type="hidden" name="action" value="active">
+            <%= requestItem.getCreatedAt() %>
+        </td>
+        <td>
+            <form action="dashboard" method="post">
+                <input type="hidden" name="action" value="0">
                 <input type="hidden" name="requestId" value="<%= requestItem.getId() %>">
                 <button type="submit" class="archive-btn">Active</button>
             </form>

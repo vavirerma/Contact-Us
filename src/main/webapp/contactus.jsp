@@ -84,7 +84,7 @@
 <div class="contact-form">
     <h2>Contact Us</h2>
     <p>Please fill this form in a decent manner</p>
-    <form action="contactus" method="post">
+    <form action="${pageContext.request.contextPath}/" method="post">
         <label for="name">Full Name <span class="required">*</span></label>
         <input type="text" id="name" name="name" required>
 
@@ -96,7 +96,7 @@
 
         <input type="submit" value="SUBMIT">
     </form>
-    <a href="login.jsp">Admin Login</a>
+    <a href="login">Admin Login</a>
 </div>
 </body>
 </html>

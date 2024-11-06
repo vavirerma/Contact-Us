@@ -10,15 +10,23 @@ public class UserDao {
     private static final String USER = "postgres";
     private static final String PASSWORD = "ravi";
 
-    public boolean validateUser(User user) throws SQLException, ClassNotFoundException {
-        Class.forName("org.postgresql.Driver");
+    public boolean isvalidUser(User user) {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-        Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        statement.setString(1, user.getUsername());
-        statement.setString(2, user.getPassword());
-        ResultSet rs = statement.executeQuery();
-        return rs.next();
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getPassword());
+            ResultSet rs = statement.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 }
