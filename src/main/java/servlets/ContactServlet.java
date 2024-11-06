@@ -28,7 +28,7 @@ public class ContactServlet extends HttpServlet {
             dao.saveRequest(contactRequest);
             response.sendRedirect("recordsaved.jsp");
         } catch (SQLException e) {
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("error.jsp");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

@@ -34,9 +34,9 @@ public class AdminLoginServlet extends HttpServlet {
                 response.getWriter().println("Invalid username or password");
             }
         } catch (SQLException e) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("error.jsp");
         } catch (ClassNotFoundException e) {
-            response.getWriter().println(e.getMessage());
+            response.sendRedirect("error.jsp");
         }
     }
 }

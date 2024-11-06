@@ -29,9 +29,9 @@ public class AdminRequestServlet extends HttpServlet {
                 request.setAttribute("archivedRequests", archivedRequests);
                 request.getRequestDispatcher("requests.jsp").forward(request, response);
             } catch (SQLException e) {
-                response.getWriter().println(e.getMessage());
+                response.sendRedirect("error.jsp");
             } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+                response.sendRedirect("error.jsp");
             }
         } else {
             response.sendRedirect("login.jsp");

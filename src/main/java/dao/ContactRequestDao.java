@@ -32,10 +32,12 @@ public class ContactRequestDao {
         Class.forName("org.postgresql.Driver");
         String sql = "SELECT * FROM user_requests WHERE is_archived = ?";
         List<ContactRequest> requests = new ArrayList<>();
+
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setBoolean(1, archived);
             ResultSet rs = statement.executeQuery();
+
             while (rs.next()) {
                 ContactRequest request = new ContactRequest();
                 request.setId(rs.getInt("id"));

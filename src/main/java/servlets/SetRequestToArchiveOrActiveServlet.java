@@ -37,9 +37,9 @@ public class SetRequestToArchiveOrActiveServlet extends HttpServlet {
                     dao.activeRequest(requestId);
                     response.sendRedirect("adminrequests");
                 } catch (SQLException e) {
-                    response.getWriter().println(e.getMessage());
+                    response.sendRedirect("error.jsp");
                 } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
+                    response.sendRedirect("error.jsp");
                 }
             }
         } else {
