@@ -28,7 +28,7 @@ public class DashboardServlet extends HttpServlet {
             request.getRequestDispatcher("dashboard.jsp").forward(request, response);
 
         } else {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("login");
         }
     }
 
@@ -51,7 +51,7 @@ public class DashboardServlet extends HttpServlet {
 
             }
         } else {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("login");
         }
     }
 
