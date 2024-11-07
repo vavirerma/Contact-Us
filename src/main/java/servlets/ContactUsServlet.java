@@ -8,9 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Request;
-
 import java.io.IOException;
-
 
 @WebServlet("/")
 public class ContactUsServlet extends HttpServlet {
@@ -29,10 +27,8 @@ public class ContactUsServlet extends HttpServlet {
         contactRequest.setEmail(email);
         contactRequest.setMessage(message);
 
-        RequestDao dao = new RequestDao();
-
-        dao.saveRequest(contactRequest);
+        RequestDao requestDao = new RequestDao();
+        requestDao.saveRequest(contactRequest);
         response.sendRedirect(request.getContextPath() + "/");
     }
 }
-

@@ -1,7 +1,6 @@
 package dao;
 
 import model.Request;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +17,10 @@ public class RequestDao {
             System.out.println(e.getMessage());
         }
 
-        String sql = "INSERT INTO user_requests (full_name, email, message) VALUES (?, ?, ?)";
+        String query = "INSERT INTO user_requests (full_name, email, message) VALUES (?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, request.getFullName());
             statement.setString(2, request.getEmail());
             statement.setString(3, request.getMessage());
@@ -38,11 +37,11 @@ public class RequestDao {
             System.out.println(e.getMessage());
         }
 
-        String sql = "SELECT * FROM user_requests WHERE is_archived = ?";
+        String query = "SELECT * FROM user_requests WHERE is_archived = ?";
         List<Request> requests = new ArrayList<>();
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setBoolean(1, isArchived);
             ResultSet rs = statement.executeQuery();
 
@@ -69,10 +68,10 @@ public class RequestDao {
             System.out.println(e.getMessage());
         }
 
-        String sql = "UPDATE user_requests SET is_archived = ? WHERE id = ?";
+        String query = "UPDATE user_requests SET is_archived = ? WHERE id = ?";
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setBoolean(1, !isArchived);
             statement.setInt(2, id);
             statement.executeUpdate();
