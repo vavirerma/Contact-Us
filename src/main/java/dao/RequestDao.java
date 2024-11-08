@@ -30,17 +30,12 @@ public class RequestDao {
     }
 
     public List<Request> fetchRequests(boolean isArchived) {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-
         String query = "SELECT * FROM user_requests WHERE is_archived = ?";
         List<Request> requests = new ArrayList<>();
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(query)) {
+            Class.forName("org.postgresql.Driver");
             statement.setBoolean(1, isArchived);
             ResultSet rs = statement.executeQuery();
 
@@ -56,25 +51,24 @@ public class RequestDao {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
         }
         return requests;
     }
 
     public void changeStatus(int id, boolean isArchived) {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-
         String query = "UPDATE user_requests SET is_archived = ? WHERE id = ?";
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(query)) {
+            Class.forName("org.postgresql.Driver");
             statement.setBoolean(1, !isArchived);
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
