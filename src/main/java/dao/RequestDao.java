@@ -1,6 +1,7 @@
 package dao;
 
 import model.Request;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,21 +12,19 @@ public class RequestDao {
     private static final String PASSWORD = "ravi";
 
     public void saveRequest(Request request) {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-
         String query = "INSERT INTO user_requests (full_name, email, message) VALUES (?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(query)) {
+            Class.forName("org.postgresql.Driver");
+
             statement.setString(1, request.getFullName());
             statement.setString(2, request.getEmail());
             statement.setString(3, request.getMessage());
             statement.executeUpdate();
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
