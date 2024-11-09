@@ -1,27 +1,30 @@
 package dao;
 
+import connections.DatabaseConnection;
 import model.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserDao {
-    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "ravi";
+    Connection connection;
+
+    public UserDao() {
+        this.connection = DatabaseConnection.getInstance().getConnection();
+    }
 
     public boolean isValidUser(User user) {
         String query = "SELECT * FROM users WHERE username = ? AND password = ?";
 
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            Class.forName("org.postgresql.Driver");
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
             ResultSet rs = statement.executeQuery();
             return rs.next();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
         return false;
